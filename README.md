@@ -49,11 +49,12 @@ If you have questions about whether or not your work adheres to these guidelines
   - **Research Highlights** ([use this format](assets/research-highlights-worksheet.pdf))
   - **User Personas** ([use this format](assets/persona-worksheet.pdf))
   - **Problem Statement(s)** ([use this format](assets/problem-statement-worksheet.pdf))
-  - **Competitive Analysis** ([feature inventory or +/Δ model](https://github.com/ga-adi-macaron/Course-Materials/tree/master/lessons/product-development/competitive-research-lesson#introduction-competitive-analysis-15-mins); embed in `research.md` as a [screenshot](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#images) or a [markdown table](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#tables))
+  - **Competitive Analysis** (Any technique we covered that you would like.)
+  - **User Stories** for your features
 
 
 
-#### Week 11: Prioritization, Proposal, and Planning
+**Prioritization, Proposal, and Planning**
 
 - Use a [**2x2 Matrix**](https://github.com/ga-adi-macaron/Course-Materials/tree/master/lessons/product-development/feature-prioritization#demo-2x2-matrix-feature-prioritization-10-mins) to prioritize your possible features
 
@@ -68,20 +69,20 @@ If you have questions about whether or not your work adheres to these guidelines
   1. Anything else you think we should know as we decide whether to approve your proposal
 
 
-- Present your proposal to Drew or Charlie starting at **3:30 pm on Monday, 12/12**
-  - [Sign up for a time slot here](https://docs.google.com/spreadsheets/d/1YABj9ZaNxLymnWsgcf2Qew3sGzPqNb0grlpg-DECS-8/edit?usp=sharing)
-  - 7 minutes for presentation, 8 minutes for our questions
-  - You may need to present a revised proposal on **Tuesday, 12/13** if we are concerned about your initial proposal
+- Present your proposal to your instructors starting at **3:30 pm on Friday, 5/12**
+  - [Sign up for a time slot here](https://docs.google.com/spreadsheets/d/1GMFTIV_Ru4F9lO-YYxj3PJLeiXMI-pEYiY-qrHUXZxY/edit?usp=sharing)
+  - 7 minutes for presentation, 3 minutes for our questions
+  - You may need to present a revised proposal on **Monday, 5/15** if we are concerned about your initial proposal
 
 
 - Once your proposal is approved:
   - Create a **Paper Prototype** for all screens you plan to include in your app
-  - Write **User Stories** for your features and plan your testing
+  -  Plan your testing based on your **User Stories**
   - Plan out the classes & interfaces you'll need
   - Sketch out your app's architecture - do you need background services, scheduled jobs, local data storage, etc.? What 3rd party libraries will you use?
 
 
-#### Week 12: Sprint
+#### Week 11: Sprint
 
 Begin building your app. Remember to...
 
@@ -91,12 +92,7 @@ Begin building your app. Remember to...
 - Choose good, descriptive names for classes & variables and document your code with comments
 
 
-#### Week 13: Holiday Break
-
-Catch up on sleep! Take some time to review your progress, reevaluate priorities, and get ready to have a productive final week.
-
-
-#### Week 14: Sprint
+#### Week 12: Sprint
 
 Finish implementing and testing your app, then [publish it to the Google Play store](https://developer.android.com/studio/publish/index.html).
 
@@ -110,7 +106,7 @@ Write a `readme.md` file that includes:
 - Descriptions of any **unsolved problems** or **major hurdles** you had to overcome
 
 
-#### Week 15: Project Due on Monday, 1/9/17
+#### Project Due on Friday, 5/26/17
 
 Submit a pull request to this repo **_by 9:00 am_**. If you created a repo from scratch rather than fork this one, then make a fork, add a link to your other repo, and submit a pull request.
 
@@ -121,7 +117,7 @@ Final deliverables that must be in your repo:
 - A `readme.md` file meeting the requirements listed above, including a link to your app on the Google Play store
 - Photos of your paper prototypes (or a link to a [POP] prototype)
 - Your `proposal.md` file (or link to Google Slides document) meeting the requirements listed above
-- Your `research.md` file meeting the requirements listed above
+- Your `research.md` file meeting the requirements listed above, and any other research materials you created.
 
 Everyone will present their app to the class starting at 9:00 am. You have a _maximum_ of 10 minutes, with 7 minutes to demo the app and 3 minutes to discuss your process.
 
