@@ -85,11 +85,12 @@ public class SampleActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<PetFindObject> call, Response<PetFindObject> response) {
                     Petfinder petFindInterface = response.body().getPetfinder();
+
                     if(petFindInterface == null){
                         Toast.makeText(SampleActivity.this, "This is null", Toast.LENGTH_SHORT).show();
                     }
                     Log.d(TAG, "onResponse: "+response);
-                    mNameView.setText(petFindInterface.getPets().toString());
+                    mNameView.setText(petFindInterface.getPets().getPet().get(1).getName().get$t());
 
                 }
 
