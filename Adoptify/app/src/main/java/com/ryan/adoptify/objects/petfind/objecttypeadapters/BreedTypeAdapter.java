@@ -1,4 +1,4 @@
-package com.ryan.adoptify.objects.petfind;
+package com.ryan.adoptify.objects.petfind.objecttypeadapters;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
@@ -6,6 +6,7 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
+import com.ryan.adoptify.objects.petfind.Breed;
 
 import java.io.IOException;
 

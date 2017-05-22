@@ -26,6 +26,10 @@ public class Option {
         this.$t = $t;
     }
 
+    public Option(Option[] options) {
+
+    }
+
     public String get$t() {
         return $t;
     }

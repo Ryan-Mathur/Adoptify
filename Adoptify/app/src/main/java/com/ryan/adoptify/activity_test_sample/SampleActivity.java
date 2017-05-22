@@ -5,24 +5,23 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.ExclusionStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.ryan.adoptify.R;
+import com.ryan.adoptify.objects.petfind.customexclusions.CustomExclusionFactory;
 import com.ryan.adoptify.interfaces.PetFindInterface;
-import com.ryan.adoptify.objects.petfind.Animal;
 import com.ryan.adoptify.objects.petfind.Breed;
-import com.ryan.adoptify.objects.petfind.BreedTypeAdapter;
 import com.ryan.adoptify.objects.petfind.Pet;
 import com.ryan.adoptify.objects.petfind.PetFindObject;
 import com.ryan.adoptify.objects.petfind.Petfinder;
-import com.ryan.adoptify.objects.petfind.Pets;
+import com.ryan.adoptify.objects.petfind.objecttypeadapters.BreedTypeAdapter;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -34,16 +33,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class SampleActivity extends AppCompatActivity {
-    public static String mLocation;
     private static final String TAG = "SampleActivity";
     public static final String API_KEY = "162b9e49bc224d56fd2fce3b079b49d5";
     public static final String JSON_FORMAT = "json";
     public static final String BASE_URL = "http://api.petfinder.com/";
     public static final String LOCATION = "21157";
-    public static final String ANIMAL = "dog";
+    public static final String COUNT = "100";
 
 
-    private TextView mNameView;
     private PetRecyclerAdapter mAdapter;
 
 
@@ -52,9 +49,19 @@ public class SampleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sample);
         Log.d(TAG, "Getting PetFinder info");
-        //mLocation = "21157";
 
-        mNameView = (TextView) findViewById(R.id.text1);
+
+        //setting up the recycler view
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerViewSample);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(SampleActivity.this, LinearLayoutManager.VERTICAL, false);
+
+        //because we are running an asynctask in the background, we don't know WHEN we are going to get
+        //the list to give to the recycler adapter. So here, I'm just giving it an empty list, as a placeholder.
+        mAdapter = new PetRecyclerAdapter(new ArrayList<Pet>());
+
+        //more setup for the recycler view
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(mAdapter);
 
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -63,6 +70,8 @@ public class SampleActivity extends AppCompatActivity {
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .registerTypeAdapter(Breed.class,new BreedTypeAdapter())
+                    //.registerTypeAdapter(Options.class,new OptionsTypeAdapter())
+                    .setExclusionStrategies(new CustomExclusionFactory())
                     .create();
 
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -75,10 +84,9 @@ public class SampleActivity extends AppCompatActivity {
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
-            Log.d(TAG, "onGson: " + retrofit.toString());
 
             PetFindInterface findPetService = retrofit.create(PetFindInterface.class);
-            final Call<PetFindObject> petFindObject = findPetService.searchPet(API_KEY,JSON_FORMAT,LOCATION);
+            Call<PetFindObject> petFindObject = findPetService.searchPet(API_KEY,JSON_FORMAT,LOCATION,COUNT);
 
 
             petFindObject.enqueue(new Callback<PetFindObject>() {
@@ -88,9 +96,11 @@ public class SampleActivity extends AppCompatActivity {
 
                     if(petFindInterface == null){
                         Toast.makeText(SampleActivity.this, "This is null", Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(SampleActivity.this, "Found results!", Toast.LENGTH_SHORT).show();
                     }
-                    Log.d(TAG, "onResponse: "+response);
-                    mNameView.setText(petFindInterface.getPets().getPet().get(1).getName().get$t());
+                    //mNameView.setText(petFindInterface.getPets().getPet().get(1).getName().get$t());
+                    mAdapter.newPetSearchList(petFindInterface.getPets().getPet());
 
                 }
 

@@ -19,12 +19,21 @@ public class Options {
     }
 
     /**
-     * 
+     *
      * @param option
      */
     public Options(List<Option> option) {
         super();
         this.option = option;
+    }
+
+
+    public Options(Options[] optionses) {
+
+    }
+
+    public Options(Object s) {
+
     }
 
     public List<Option> getOption() {

@@ -15,5 +15,6 @@ public interface PetFindInterface {
     @GET("pet.find")
     Call<PetFindObject> searchPet(@Query("key") String apiKey,
                                   @Query("format")String format,
-                                  @Query("location") String location);
+                                  @Query("location") String location,
+                                  @Query("count") String count);
 }

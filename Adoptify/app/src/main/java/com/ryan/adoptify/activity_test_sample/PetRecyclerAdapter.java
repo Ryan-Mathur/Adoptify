@@ -25,22 +25,25 @@ public class PetRecyclerAdapter extends RecyclerView.Adapter<PetVH>{
 
     @Override
     public PetVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new PetVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_sample, parent, false));
+        return new PetVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_layout, parent, false));
     }
 
     @Override
     public void onBindViewHolder(PetVH holder, int position) {
         Pet currentPet = mPetsList.get(position);
-        holder.mName.setText((CharSequence) currentPet.getId());
+        holder.mName.setText(currentPet.getName().get$t());
 
 
     }
-
 
     @Override
     public int getItemCount() {
         return mPetsList.size();
     }
 
+    public void newPetSearchList(List<Pet> newList){
+        mPetsList = newList;
+        notifyDataSetChanged();
+    }
 }
 
