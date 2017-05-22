@@ -1,5 +1,7 @@
 package com.ryan.adoptify.interfaces;
 
+import android.widget.EditText;
+
 import com.ryan.adoptify.objects.petfind.PetFindObject;
 
 import retrofit2.Call;
