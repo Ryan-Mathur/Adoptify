@@ -6,10 +6,10 @@ import android.widget.TextView;
 
 import com.ryan.adoptify.R;
 
-public class PetVH extends RecyclerView.ViewHolder{
+public class PetVHTest extends RecyclerView.ViewHolder{
     public TextView mName;
 
-    public PetVH(View itemView) {
+    public PetVHTest(View itemView) {
         super(itemView);
         mName = (TextView) itemView.findViewById(R.id.textView);
     }

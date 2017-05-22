@@ -41,7 +41,7 @@ public class SampleActivity extends AppCompatActivity {
     public static final String COUNT = "100";
 
 
-    private PetRecyclerAdapter mAdapter;
+    private PetRecyclerAdapterTest mAdapter;
 
 
     @Override
@@ -57,7 +57,7 @@ public class SampleActivity extends AppCompatActivity {
 
         //because we are running an asynctask in the background, we don't know WHEN we are going to get
         //the list to give to the recycler adapter. So here, I'm just giving it an empty list, as a placeholder.
-        mAdapter = new PetRecyclerAdapter(new ArrayList<Pet>());
+        mAdapter = new PetRecyclerAdapterTest(new ArrayList<Pet>());
 
         //more setup for the recycler view
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -86,7 +86,7 @@ public class SampleActivity extends AppCompatActivity {
                     .build();
 
             PetFindInterface findPetService = retrofit.create(PetFindInterface.class);
-            Call<PetFindObject> petFindObject = findPetService.searchPet(API_KEY,JSON_FORMAT,LOCATION,COUNT);
+            Call<PetFindObject> petFindObject = findPetService.searchPet(API_KEY,JSON_FORMAT,LOCATION);
 
 
             petFindObject.enqueue(new Callback<PetFindObject>() {

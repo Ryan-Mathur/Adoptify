@@ -2,13 +2,10 @@ package com.ryan.adoptify.activity_test_sample;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.ryan.adoptify.R;
 import com.ryan.adoptify.objects.petfind.Pet;
-import com.ryan.adoptify.objects.petfind.PetFindObject;
-import com.ryan.adoptify.objects.petfind.Pets;
 
 import java.util.List;
 
@@ -16,20 +13,20 @@ import java.util.List;
  * Created by Ryan on 5/15/17.
  */
 
-public class PetRecyclerAdapter extends RecyclerView.Adapter<PetVH>{
+public class PetRecyclerAdapterTest extends RecyclerView.Adapter<PetVHTest>{
     private List<Pet> mPetsList;
 
-    public PetRecyclerAdapter(List<Pet> petsList) {
+    public PetRecyclerAdapterTest(List<Pet> petsList) {
         mPetsList = petsList;
     }
 
     @Override
-    public PetVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new PetVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_layout, parent, false));
+    public PetVHTest onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new PetVHTest(LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_layout, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(PetVH holder, int position) {
+    public void onBindViewHolder(PetVHTest holder, int position) {
         Pet currentPet = mPetsList.get(position);
         holder.mName.setText(currentPet.getName().get$t());
 

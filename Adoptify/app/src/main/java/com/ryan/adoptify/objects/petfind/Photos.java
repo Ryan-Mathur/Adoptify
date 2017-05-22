@@ -35,6 +35,7 @@ public class Photos {
         this.photo = photo;
     }
 
+
     public Photos withPhoto(List<Photo> photo) {
         this.photo = photo;
         return this;

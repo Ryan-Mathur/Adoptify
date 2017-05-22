@@ -7,9 +7,11 @@ package com.ryan.adoptify.constants;
 
 public class PetFinderAPI {
 
-//    public static final String API_KEY = "key=162b9e49bc224d56fd2fce3b079b49d5";
-//    public static final String JSON_FORMAT = "format=json";
-//    public static final String BASE_URL = "http://api.petfinder.com/";
-
+    private static final String TAG = "SampleActivity";
+    public static final String API_KEY = "162b9e49bc224d56fd2fce3b079b49d5";
+    public static final String JSON_FORMAT = "json";
+    public static final String BASE_URL = "http://api.petfinder.com/";
+    public static final String LOCATION = "21157";
+    //public static final String COUNT = "100";
 
 }
