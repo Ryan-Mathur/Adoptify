@@ -78,67 +78,68 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-    private void search(){
-        if (mLocation == null){
+    private void search() {
+        if (mLocationInput == null) {
             Toast.makeText(this, "Please Enter A Zip Code", Toast.LENGTH_SHORT).show();
-            return;
-        }else {
+
+        } else {
             mLocation = mLocationInput.getText().toString().trim();
         }
 
-        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
+            ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+            if (networkInfo != null && networkInfo.isConnected()) {
 
-            Gson gson = new GsonBuilder()
-                    .setLenient()
-                    .registerTypeAdapter(Breed.class,new BreedTypeAdapter())
-                    //.registerTypeAdapter(Options.class,new OptionsTypeAdapter())
-                    .setExclusionStrategies(new CustomExclusionFactory())
-                    .create();
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .registerTypeAdapter(Breed.class, new BreedTypeAdapter())
+                        //.registerTypeAdapter(Options.class,new OptionsTypeAdapter())
+                        .setExclusionStrategies(new CustomExclusionFactory())
+                        .create();
 
-            //uncomment below and client in retrofit to view log of request
+                //uncomment below and client in retrofit to view log of request
            /* HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             OkHttpClient client = new OkHttpClient.Builder()
                     .addInterceptor(interceptor).build();*/
 
-            Retrofit retrofit = new Retrofit.Builder()
-                    //.client(client)
-                    .baseUrl(PetFinderAPI.BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .build();
+                Retrofit retrofit = new Retrofit.Builder()
+                        //.client(client)
+                        .baseUrl(PetFinderAPI.BASE_URL)
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .build();
 
-            PetFindInterface findPetService = retrofit.create(PetFindInterface.class);
-            Call<PetFindObject> petFindObject = findPetService.searchPet(PetFinderAPI.API_KEY,
-                    PetFinderAPI.JSON_FORMAT,mLocation);
+                PetFindInterface findPetService = retrofit.create(PetFindInterface.class);
+                Call<PetFindObject> petFindObject = findPetService.searchPet(PetFinderAPI.API_KEY,
+                        PetFinderAPI.JSON_FORMAT, mLocation);
 
 
-            petFindObject.enqueue(new Callback<PetFindObject>() {
-                @Override
-                public void onResponse(Call<PetFindObject> call, Response<PetFindObject> response) {
-                    Petfinder petFindInterface = response.body().getPetfinder();
+                petFindObject.enqueue(new Callback<PetFindObject>() {
+                    @Override
+                    public void onResponse(Call<PetFindObject> call, Response<PetFindObject> response) {
+                        Petfinder petFindInterface = response.body().getPetfinder();
 
-                    if(petFindInterface == null){
-                        Toast.makeText(MainActivity.this, "No Animals Found!", Toast.LENGTH_SHORT).show();
-                    }else {
-                        Toast.makeText(MainActivity.this, "Found Animals!", Toast.LENGTH_SHORT).show();
-                        mAdapter.newPetSearchList(petFindInterface.getPets().getPet());
+                        if (petFindInterface == null) {
+                            Toast.makeText(MainActivity.this, "No Animals Found!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(MainActivity.this, "Found Animals!", Toast.LENGTH_SHORT).show();
+                            mAdapter.newPetSearchList(petFindInterface.getPets().getPet());
+                        }
+
                     }
 
-                }
+                    @Override
+                    public void onFailure(Call<PetFindObject> call, Throwable t) {
+                        Log.d(TAG, "onFailure: PetFinder API call Failed");
+                        t.printStackTrace();
+                        Toast.makeText(MainActivity.this, "Unable to load data from PetFinder", Toast.LENGTH_SHORT).show();
+                    }
 
-                @Override
-                public void onFailure(Call<PetFindObject> call, Throwable t) {
-                    Log.d(TAG, "onFailure: PetFinder API call Failed");
-                    t.printStackTrace();
-                    Toast.makeText(MainActivity.this, "Unable to load data from PetFinder", Toast.LENGTH_SHORT).show();
-                }
+                });
+            } else {
+                Toast.makeText(MainActivity.this, "No network connection", Toast.LENGTH_LONG).show();
+            }
 
-            });
-        } else {
-            Toast.makeText(MainActivity.this, "No network connection", Toast.LENGTH_LONG).show();
         }
-
     }
-}
+

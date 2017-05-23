@@ -24,7 +24,7 @@
         <activity android:name=".activity_test_sample.SampleActivity">
         </activity>
         <service
-            android:name=".FetchAddressIntentService"
+            android:name=".location.FetchAddressIntentService"
             android:exported="false"/>
     </application>
 

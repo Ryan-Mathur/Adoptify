@@ -1,10 +1,12 @@
-package com.ryan.adoptify;
+package com.ryan.adoptify.location;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.location.Address;
 import android.location.Geocoder;
 import android.support.annotation.Nullable;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -25,6 +27,11 @@ public class FetchAddressIntentService extends IntentService {
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        List<Address> Data = null;
+
+
+
+
     }
 
     public final class Constants {
