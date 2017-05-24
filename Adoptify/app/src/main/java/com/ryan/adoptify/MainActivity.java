@@ -1,8 +1,13 @@
 package com.ryan.adoptify;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -22,9 +27,16 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStates;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.ryan.adoptify.constants.PetFinderAPI;
@@ -37,7 +49,10 @@ import com.ryan.adoptify.objects.petfind.customexclusions.CustomExclusionFactory
 import com.ryan.adoptify.objects.petfind.objecttypeadapters.BreedTypeAdapter;
 import com.ryan.adoptify.recyclerview.PetRecyclerAdapter;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,10 +60,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static android.R.attr.data;
+
 public class MainActivity extends AppCompatActivity implements
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
     private static final String TAG = "MainActivity";
     public static final int REQUEST_LOCATION = 10;
+    private static final int REQUEST_CHECK_SETTINGS = 11;
     private String mLocation;
     private EditText mLocationInput;
     private PetRecyclerAdapter mAdapter;
@@ -56,7 +74,11 @@ public class MainActivity extends AppCompatActivity implements
     private ImageButton mCurrentLocation;
     protected Location mLastLocation;
     private GoogleApiClient mGoogleApiClient;
-    private String mLong, mLat;
+    private Double mLong, mLat;
+
+
+    public MainActivity() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements
         mCurrentLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                getLocation();
             }
         });
         // call a api from yelp when click on the search button
@@ -97,7 +119,17 @@ public class MainActivity extends AppCompatActivity implements
 
             }
         });
+
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(MainActivity.this)
+                    .addConnectionCallbacks(MainActivity.this)
+                    .addOnConnectionFailedListener(MainActivity.this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
     }
+
+
 
 
     private void search() {
@@ -150,14 +182,8 @@ public class MainActivity extends AppCompatActivity implements
                             mAdapter.newPetSearchList(petFindInterface.getPets().getPet());
                         } catch (NullPointerException e) {
                             Toast.makeText(MainActivity.this, "No results please make sure your zip code is valid", Toast.LENGTH_SHORT).show();
-
-                        } finally {
-                            Toast.makeText(MainActivity.this, "Found Animals!", Toast.LENGTH_SHORT).show();
                         }
-
-
                     }
-
                 }
 
                 @Override
@@ -173,36 +199,153 @@ public class MainActivity extends AppCompatActivity implements
         }
 
     }
+
     //location
     private void getLocation() {
+
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     REQUEST_LOCATION);
-        }
-        else {
+        } else {
+            //comment code out since it does nothing intention was to check if location is turned on but isn't working
+//            LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
+//
+//            PendingResult<LocationSettingsResult> result =
+//                    LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, builder.build());
+//
+//            result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
+//                @Override
+//                public void onResult(LocationSettingsResult result) {
+//                    final Status status = result.getStatus();
+//                    final LocationSettingsStates state = result.getLocationSettingsStates();
+//                    switch (status.getStatusCode()) {
+//                        case LocationSettingsStatusCodes.SUCCESS:
+//                            // All location settings are satisfied. The client can initialize location
+//                            // requests here.
+//
+//                            break;
+//                        case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+//                            // Location settings are not satisfied. But could be fixed by showing the user
+//                            // a dialog.
+//                            try {
+//                                // Show the dialog by calling startResolutionForResult(),
+//                                // and check the result in onActivityResult().
+//                                status.startResolutionForResult(
+//                                        MainActivity.this,
+//                                        REQUEST_CHECK_SETTINGS);
+//                            } catch (IntentSender.SendIntentException e) {
+//                                // Ignore the error.
+//                            }
+//                            break;
+//                        case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+//                            // Location settings are not satisfied. However, we have no way to fix the
+//                            // settings so we won't show the dialog.
+//
+//                            break;
+//                    }
+//                }
+//            });
+
 
             Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
+
             if (lastLocation == null) {
+
                 LocationRequest locationRequest = LocationRequest.create()
                         .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-                LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, (LocationListener) this);
+                LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, this);
+
 
             } else {
-                mLat = String.valueOf(lastLocation.getLatitude());
-                mLong = String.valueOf(lastLocation.getLongitude());
+                mLat = lastLocation.getLatitude();
+                mLong = lastLocation.getLongitude();
+                //Toast.makeText(this, ""+mLat+"&"+mLong, Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        Geocoder geocoder = new Geocoder(this, Locale.US);
+
+
+        try {
+            if (mLat == null && mLong == null) {
+                Toast.makeText(this, "Please make sure your location is turned on", Toast.LENGTH_SHORT).show();
+                return;
+            } else {
+                //Place your latitude and longitude
+                List<Address> addresses = geocoder.getFromLocation(mLat, mLong, 1);
+
+
+                if (addresses != null) {
+
+                    String fetchedAddress = addresses.get(0).getPostalCode();
+
+                    mLocationInput.setText(fetchedAddress);
+
+                } else
+                    mLocationInput.setText("No location found..!");
 
             }
-
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(), "Could not get address..!", Toast.LENGTH_LONG).show();
         }
     }
+
+
     @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        getLocation();
+    protected void onStart() {
+        super.onStart();
+
+        if (mGoogleApiClient != null) {
+            mGoogleApiClient.connect();
+        }
     }
+
+    @Override
+    protected void onStop() {
+        mGoogleApiClient.disconnect();
+        super.onStop();
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {}
+
+    //comment code out since it does nothing intention was to check if location is turned on
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data)
+//    {
+//        Log.d("onActivityResult()", Integer.toString(resultCode));
+//
+//        final LocationSettingsStates states = LocationSettingsStates.fromIntent(data);
+//        switch (requestCode)
+//        {
+//            case REQUEST_LOCATION:
+//                switch (resultCode)
+//                {
+//                    case Activity.RESULT_OK:
+//                    {
+//                        // All required changes were successfully made
+//                        Toast.makeText(MainActivity.this, "Location enabled by user!", Toast.LENGTH_LONG).show();
+//                        break;
+//                    }
+//                    case Activity.RESULT_CANCELED:
+//                    {
+//                        // The user was asked to change settings, but chose not to
+//                        Toast.makeText(MainActivity.this, "Location not enabled, user cancelled.", Toast.LENGTH_LONG).show();
+//                        break;
+//                    }
+//                    default:
+//                    {
+//                        break;
+//                    }
+//                }
+//                break;
+//        }
+//    }
 
     @Override
     public void onConnectionSuspended(int i) {
@@ -212,6 +355,23 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_LOCATION:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                } else {
+                    Toast.makeText(this, "You said no, how could you??", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
     }
 }
 

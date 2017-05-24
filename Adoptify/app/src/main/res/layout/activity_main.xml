@@ -34,7 +34,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
                     android:background="@android:color/transparent"
-                    android:hint="Current Location"
+                    android:hint="Enter A Zip Code"
                     android:inputType="text"
                     android:paddingLeft="5dp"
                     android:textColorHint="#3f98f1"/>
