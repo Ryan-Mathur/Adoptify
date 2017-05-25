@@ -14,10 +14,12 @@ import com.ryan.adoptify.R;
 public class PetVH extends RecyclerView.ViewHolder{
     public TextView mName;
     public ImageView mPetImage;
+    View mRootView;
 
     public PetVH(View itemView) {
         super(itemView);
         mName = (TextView) itemView.findViewById(R.id.petName);
         mPetImage = (ImageView) itemView.findViewById(R.id.petImage);
+        mRootView = itemView;
     }
 }

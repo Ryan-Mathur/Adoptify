@@ -1,10 +1,7 @@
 package com.ryan.adoptify;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -27,16 +24,9 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResult;
-import com.google.android.gms.location.LocationSettingsStates;
-import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.ryan.adoptify.constants.PetFinderAPI;
@@ -48,6 +38,7 @@ import com.ryan.adoptify.objects.petfind.Petfinder;
 import com.ryan.adoptify.objects.petfind.customexclusions.CustomExclusionFactory;
 import com.ryan.adoptify.objects.petfind.objecttypeadapters.BreedTypeAdapter;
 import com.ryan.adoptify.recyclerview.PetRecyclerAdapter;
+import com.ryan.adoptify.singleton.Singleton;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -59,8 +50,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-import static android.R.attr.data;
 
 public class MainActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
@@ -114,9 +103,7 @@ public class MainActivity extends AppCompatActivity implements
         mSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 search();
-
             }
         });
 
@@ -128,8 +115,6 @@ public class MainActivity extends AppCompatActivity implements
                     .build();
         }
     }
-
-
 
 
     private void search() {
@@ -172,6 +157,9 @@ public class MainActivity extends AppCompatActivity implements
                 @Override
                 public void onResponse(Call<PetFindObject> call, Response<PetFindObject> response) {
                     Petfinder petFindInterface = response.body().getPetfinder();
+                    for( int i = 0; i < petFindInterface.getPets().getPet().size(); i++) {
+                        Singleton.getInstance().setPetsCache().add(i, petFindInterface.getPets());
+                    }
 
                     if (petFindInterface == null) {
                         Toast.makeText(MainActivity.this, "No Animals Found!", Toast.LENGTH_SHORT).show();
@@ -312,7 +300,8 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onConnected(@Nullable Bundle bundle) {}
+    public void onConnected(@Nullable Bundle bundle) {
+    }
 
     //comment code out since it does nothing intention was to check if location is turned on
 //    @Override
