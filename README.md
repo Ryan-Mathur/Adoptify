@@ -1,147 +1,29 @@
-# ![](https://ga-dash.s3.amazonaws.com/production/assets/logo-9f88ae6c9c3871690e33280fcf557f33.png) Project #4: Your Portfolio Project
+# ![](https://ga-dash.s3.amazonaws.com/production/assets/logo-9f88ae6c9c3871690e33280fcf557f33.png) Project #4: Adoptify
 
 ## Overview
 
-**You’ve come a long way, and it's time to show it.**
-This will be your most advanced project to date, and if you put creativity into it, it'll hopefully be the thing you want to show off most prominently in your portfolio.
-
-**You get to call the shots and invent your own idea**, choosing frameworks & tools that are appropriate for what you want to build.
-Pull from everything you've learned so far, and **tackle something that'll push you a little outside of your comfort zone.**
-
-For this project, you'll be working on your own and using product development strategies learned in unit 3 to come up with a project proposal that will be reviewed with your instructional team.
-This proposal is done to make sure you are building **something that can be accomplish in the limited time we have** while making sure it's **something that will challenge you**.
+This application is designed to help you find pets near your location. 
+Either enter in your zip code or have your location turned on and use the location button to get your current zip code!
+This helps you get in touch with animals that don't have a voice or ones that you didn't even know where nearby!
 
 
 ## Technical Requirements
+This app utilized googles location api,petfinder.com api, geocoding to translate location to address, recyclerviews, android networking, and location permissions.
 
-Your app must:
+## Research Approach
 
-- **Be a complete application** that provides a thorough solution to the problem you choose to address
-- **Have an impressive design and user experience** that follows [Google's Material Design Guidelines](https://developer.android.com/design/index.html) and can impress future clients and employers
-- **Use at least one API or SDK**
-- **Implement thoughtful user stories** that are significant enough to help you know which features to build and which to scrap
-- **Be object oriented** with organized, well-documented, [DRY](https://en.wikipedia.org/wiki/Don't_repeat_yourself) code
-- **Be robust**: handle orientation changes without losing state, and handle of failure well (e.g., failed network calls) gracefully
-- **Be available on the Google Play store**, so it is publicly available
+I took a general approach of asking users questions about pets. 
 
+## Major Hurdles
 
-## Code of Conduct
-
-As always, your app must adhere to General Assembly's [student code of conduct guidelines](https://charlesdrews.gitbooks.io/ga-adi-macaron/content/markdown/code-of-conduct.html).
-
-If you have questions about whether or not your work adheres to these guidelines, please speak with a member of your instructional team.
-
-
-## Timeline and Deliverables
-
-#### Week 10: Brainstorming and Research
-
-- Determine what problem(s) you'd like to address or niche you'd like to fill with your app
-
-
-- Write a **Research Plan** ([use this format](assets/research-plan-worksheet.pdf)) and add it to a `research.md` markdown file to be handed in with your completed project
-
-
-- Conduct _at least 3_ **user interviews**
-
-
-- Add the following to your `research.md` file after your research plan:
-  - **Research Highlights** ([use this format](assets/research-highlights-worksheet.pdf))
-  - **User Personas** ([use this format](assets/persona-worksheet.pdf))
-  - **Problem Statement(s)** ([use this format](assets/problem-statement-worksheet.pdf))
-  - **Competitive Analysis** (Any technique we covered that you would like.)
-  - **User Stories** for your features
-
-
-
-**Prioritization, Proposal, and Planning**
-
-- Use a [**2x2 Matrix**](https://github.com/ga-adi-macaron/Course-Materials/tree/master/lessons/product-development/feature-prioritization#demo-2x2-matrix-feature-prioritization-10-mins) to prioritize your possible features
-
-
-- Write a **Project Proposal** (either in a `proposal.md` file or a Google Slides / PowerPoint deck) which includes:
-  1. **Overall Objectives**, including problems to be solved and user goals to facilitate - these should be _very specific_ and _based on your research_!
-  1. **Research Synthesis** - what trends, goals, motivations, and pain points did you identify?
-  1. **Target Audience** - must be _very specific_ and represent your interviewees - What do they need and why? How/when/where do they use similar apps? What do they value and what do they avoid? Etc.
-  1. **Prioritized list of features** - What problem or user goal does each one address? How did you determine priority?
-  1. **Differentiators** from competitors and pain points addressed
-  1. **Constraints** you face - e.g. availability of data, need for permissions users may deny, unfamiliar technologies required, etc.
-  1. Anything else you think we should know as we decide whether to approve your proposal
-
-
-- Present your proposal to your instructors starting at **3:30 pm on Friday, 5/12**
-  - [Sign up for a time slot here](https://docs.google.com/spreadsheets/d/1GMFTIV_Ru4F9lO-YYxj3PJLeiXMI-pEYiY-qrHUXZxY/edit?usp=sharing)
-  - 7 minutes for presentation, 3 minutes for our questions
-  - You may need to present a revised proposal on **Monday, 5/15** if we are concerned about your initial proposal
-
-
-- Once your proposal is approved:
-  - Create a **Paper Prototype** for all screens you plan to include in your app
-  -  Plan your testing based on your **User Stories**
-  - Plan out the classes & interfaces you'll need
-  - Sketch out your app's architecture - do you need background services, scheduled jobs, local data storage, etc.? What 3rd party libraries will you use?
-
-
-#### Week 11: Sprint
-
-Begin building your app. Remember to...
-
-- Commit often & push to GitHub to preserve your progress
-- Do your work on separate _feature branches_ and test thoroughly before merging into your master branch - make sure your master branch always works!
-- Write tests for your features as you implement them (ideally, even before)
-- Choose good, descriptive names for classes & variables and document your code with comments
-
-
-#### Week 12: Sprint
-
-Finish implementing and testing your app, then [publish it to the Google Play store](https://developer.android.com/studio/publish/index.html).
-
-Write a `readme.md` file that includes:
-- A link to your app on the Google Play store
-- What the app does & how it's useful
-- [Embedded screenshot(s)](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#images) to show off your features
-- Explanation of the technologies, techniques, libraries, etc. you used
-- A couple paragraphs about the **general approach you took** in your design process that point to your `research.md` file
-- If necessary, **any special instructions on how to build the app in Android Studio**
-- Descriptions of any **unsolved problems** or **major hurdles** you had to overcome
-
+A major hurdle that I had to overcome in this project was the fact that the first api was encoded using php and I couldn't figure out how to utilize it. The second api kept changing the way data was given to me it would sometimes be an object other times
+a array of objects so it made the conversion from json to gson extremely challenging.
 
 #### Project Due on Friday, 5/26/17
 
 Submit a pull request to this repo **_by 9:00 am_**. If you created a repo from scratch rather than fork this one, then make a fork, add a link to your other repo, and submit a pull request.
 
 Final deliverables that must be in your repo:
-- Source code for a completed, fully-functioning app
-- Unit tests and Espresso tests as needed
-- Frequent commits dating back to the beginning of the project with useful commit messages
+
 - A `readme.md` file meeting the requirements listed above, including a link to your app on the Google Play store
 - Photos of your paper prototypes (or a link to a [POP] prototype)
-- Your `proposal.md` file (or link to Google Slides document) meeting the requirements listed above
-- Your `research.md` file meeting the requirements listed above, and any other research materials you created.
-
-Everyone will present their app to the class starting at 9:00 am. You have a _maximum_ of 10 minutes, with 7 minutes to demo the app and 3 minutes to discuss your process.
-
-
-## Suggested Ways to Get Started
-
-* **Don’t get too caught up in too many awesome features** – simple is always better. Build something impressive that does one thing well.
-* **Design first.** Planning with user stories & wireframes before writing code means you won't get distracted changing your mind – you'll know what to build, and you can spend your time wisely by just building it.
-* **Don’t hesitate to write throwaway code** to solve short term problems.
-* **Read the docs for whatever technologies / frameworks / API’s you use**.
-* **Write DRY code**.
-* **Be consistent with your code style.**
-* **Commit early, commit often.** Don’t be afraid to break something because you can always go back in time to a previous version.
-* **Keep user stories small and well-defined**, and remember – user stories focus on what a user needs, not what development tasks need accomplishing.
-* **Write code another developer wouldn't have to ask you about**. Do your naming conventions make sense? Would another developer be able to look at your app and understand what everything is?
-* **Make it all well-formatted.** Are you indenting, consistently? Can we find the start and end of every div, curly brace, etc?
-* **Comment your code.** Will someone understand what is going on in each block or function? Even if it's obvious, explaining the what & why means someone else can pick it up and get it.
-* **Write pseudocode before you write actual code.** Thinking through the logic of something helps.
-
-
-## Resources
-
-- [Class resources list](https://charlesdrews.gitbooks.io/ga-adi-macaron/content/markdown/resources.html)
-- [Android Developer Website](http://developer.android.com/index.html)
-- [Google Design Guidelines](https://www.google.com/design/spec/material-design/introduction.html)
-- [API Search](http://apis.io) and [ProgrammableWeb](http://www.programmableweb.com/) - find APIs to get the data you need
-- [HackDesign](https://hackdesign.org/lessons) and [Visual Design Hacking](https://generalassemb.ly/online/videos/visual-design-hacking) - tips for producing great designs
