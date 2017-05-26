@@ -4,4 +4,17 @@
     <string name="invalid_lat_long_used">invalid_lat_long_used</string>
     <string name="no_address_found">no_address_found</string>
     <string name="address_found">address_found</string>
+    <string name="pet_name">Pet Name: </string>
+    <string name="animal_type">Animal: </string>
+    <string name="pet_description">Description: </string>
+    <string name="adoptable">Adoptable: </string>
+    <string name="available">Ready For Adoption</string>
+    <string name="not_available">Not Available For Adoption</string>
+    <string name="sex">Sex: </string>
+    <string name="phone">Phone Number: </string>
+    <string name="email">Contact Email: </string>
+    <string name="city">City: </string>
+    <string name="state">State: </string>
+    <string name="zip">Zip: </string>
+    <string name="breed">Breed: </string>
 </resources>

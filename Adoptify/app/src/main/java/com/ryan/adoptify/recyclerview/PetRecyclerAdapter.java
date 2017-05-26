@@ -13,6 +13,7 @@ import com.ryan.adoptify.R;
 import com.ryan.adoptify.constants.Constants;
 import com.ryan.adoptify.objects.petfind.Pet;
 import com.ryan.adoptify.objects.petfind.Pets;
+import com.ryan.adoptify.singleton.Singleton;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -41,15 +42,22 @@ public class PetRecyclerAdapter extends RecyclerView.Adapter<PetVH>{
     public void onBindViewHolder(final PetVH holder, final int position) {
         final Pet currentPet = mPetsList.get(position);
         holder.mName.setText(currentPet.getName().get$t());
-        if (!currentPet.getMedia().getPhotos().getPhoto().isEmpty()) {
-            Picasso.with(holder.mPetImage.getContext()).load(
-                    currentPet.getMedia().getPhotos().getPhoto().get(0).get$t()
-            )
-                    .resize(200, 200).into(holder.mPetImage);
+        try{
+            if (currentPet.getMedia().getPhotos().getPhoto() == null) {
+                holder.mPetImage.setImageResource(R.drawable.no_image_found);
 
-        } else {
-            holder.mPetImage.setImageResource(R.drawable.no_image_found);
+
+            } else {
+                Picasso.with(holder.mPetImage.getContext()).load(
+                        currentPet.getMedia().getPhotos().getPhoto().get(0).get$t()
+                )
+                        .resize(300,300).into(holder.mPetImage);
+            }
+        }catch (NullPointerException e){
+
         }
+
+        holder.mAnimalType.setText(currentPet.getAnimal().get$t());
 
         holder.mRootView.setOnClickListener(new View.OnClickListener() {
             @Override

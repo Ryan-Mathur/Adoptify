@@ -86,7 +86,7 @@ public class SampleActivity extends AppCompatActivity {
                     .build();
 
             PetFindInterface findPetService = retrofit.create(PetFindInterface.class);
-            Call<PetFindObject> petFindObject = findPetService.searchPet(API_KEY,JSON_FORMAT,LOCATION);
+            Call<PetFindObject> petFindObject = findPetService.searchPet(API_KEY,JSON_FORMAT,COUNT,LOCATION);
 
 
             petFindObject.enqueue(new Callback<PetFindObject>() {

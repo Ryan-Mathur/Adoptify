@@ -12,7 +12,7 @@ import com.ryan.adoptify.R;
  */
 
 public class PetVH extends RecyclerView.ViewHolder{
-    public TextView mName;
+    public TextView mName,mAnimalType;
     public ImageView mPetImage;
     View mRootView;
 
@@ -20,6 +20,7 @@ public class PetVH extends RecyclerView.ViewHolder{
         super(itemView);
         mName = (TextView) itemView.findViewById(R.id.petName);
         mPetImage = (ImageView) itemView.findViewById(R.id.petImage);
+        mAnimalType = (TextView) itemView.findViewById(R.id.animal);
         mRootView = itemView;
     }
 }

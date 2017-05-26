@@ -1,16 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context="com.ryan.adoptify.DetailActivity">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context="com.ryan.adoptify.DetailActivity"
+    android:backgroundTint="@color/colorPrimary">
 
-    <TextView
-        android:id="@+id/detailPetName"
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/detailImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"/>
+        android:orientation="vertical">
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/detailPetName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pet_name"
+                android:textSize="14sp"
+                android:padding="5dp"/>
+            <TextView
+                android:id="@+id/detailAnimal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/animal_type"
+                android:textSize="14sp"
+                android:padding="5dp"/>
+            <TextView
+                android:id="@+id/detailBreed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/breed"
+                android:textSize="14sp"
+                android:padding="5dp"/>
+            <TextView
+                android:id="@+id/detailStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/adoptable"
+                android:textSize="14sp"
+                android:padding="5dp"/>
+            <TextView
+                android:id="@+id/detailSex"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/sex"
+                android:textSize="14sp"
+                android:padding="5dp"/>
+
+            <TextView
+                android:id="@+id/detailDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pet_description"
+                android:textSize="14sp"
+                android:lineSpacingExtra="13sp"
+                android:padding="5dp"/>
+
+            <TextView
+                android:id="@+id/detailPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/phone"
+                android:textSize="14sp"
+                android:padding="5dp"/>
+
+            <TextView
+                android:id="@+id/detailEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/email"
+                android:textSize="14sp"
+                android:padding="5dp"/>
+            <TextView
+                android:id="@+id/detailState"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/state"
+                android:textSize="14sp"
+                android:padding="5dp"/>
+            <TextView
+                android:id="@+id/detailCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/city"
+                android:textSize="14sp"
+                android:padding="5dp"/>
+            <TextView
+                android:id="@+id/detailZip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/zip"
+                android:textSize="14sp"
+                android:padding="5dp"/>
+        </LinearLayout>
+
+
+    </TableLayout>
+</ScrollView>

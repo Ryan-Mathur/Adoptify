@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements
     protected Location mLastLocation;
     private GoogleApiClient mGoogleApiClient;
     private Double mLong, mLat;
+    private TextView petLocation;
 
 
     public MainActivity() {
@@ -150,45 +152,49 @@ public class MainActivity extends AppCompatActivity implements
 
             PetFindInterface findPetService = retrofit.create(PetFindInterface.class);
             Call<PetFindObject> petFindObject = findPetService.searchPet(PetFinderAPI.API_KEY,
-                    PetFinderAPI.JSON_FORMAT, mLocation);
+                    PetFinderAPI.JSON_FORMAT, PetFinderAPI.COUNT, mLocation);
 
 
             petFindObject.enqueue(new Callback<PetFindObject>() {
                 @Override
                 public void onResponse(Call<PetFindObject> call, Response<PetFindObject> response) {
                     Petfinder petFindInterface = response.body().getPetfinder();
-                    for( int i = 0; i < petFindInterface.getPets().getPet().size(); i++) {
-                        Singleton.getInstance().setPetsCache().add(i, petFindInterface.getPets());
-                    }
 
-                    if (petFindInterface == null) {
-                        Toast.makeText(MainActivity.this, "No Animals Found!", Toast.LENGTH_SHORT).show();
-                    } else {
 
-                        //todo this needs work will crash without try catch due to null pointer exception for list
+                    try {
+                        mAdapter.newPetSearchList(petFindInterface.getPets().getPet());
+                    } catch (NullPointerException e) {
+                        Toast.makeText(MainActivity.this, "No results please make sure your zip code is valid", Toast.LENGTH_SHORT).show();
+                    } finally {
                         try {
-                            mAdapter.newPetSearchList(petFindInterface.getPets().getPet());
+                            for (int i = 0; i < petFindInterface.getPets().getPet().size(); i++) {
+                                Singleton.getInstance().setPetsCache().add(i, petFindInterface.getPets());
+                            }
                         } catch (NullPointerException e) {
                             Toast.makeText(MainActivity.this, "No results please make sure your zip code is valid", Toast.LENGTH_SHORT).show();
+                        } finally {
+
                         }
                     }
                 }
 
-                @Override
-                public void onFailure(Call<PetFindObject> call, Throwable t) {
-                    Log.d(TAG, "onFailure: PetFinder API call Failed");
-                    t.printStackTrace();
-                    Toast.makeText(MainActivity.this, "Unable to load data from PetFinder", Toast.LENGTH_SHORT).show();
-                }
+                    @Override
+                    public void onFailure (Call < PetFindObject > call, Throwable t){
+                        Log.d(TAG, "onFailure: PetFinder API call Failed");
+                        t.printStackTrace();
+                        Toast.makeText(MainActivity.this, "Unable to load data from PetFinder", Toast.LENGTH_SHORT).show();
+                    }
 
-            });
-        } else {
-            Toast.makeText(MainActivity.this, "No network connection", Toast.LENGTH_LONG).show();
+                });
+            } else{
+                Toast.makeText(MainActivity.this, "No network connection", Toast.LENGTH_LONG).show();
+            }
+
         }
 
-    }
 
-    //location
+        //location
+
     private void getLocation() {
 
 

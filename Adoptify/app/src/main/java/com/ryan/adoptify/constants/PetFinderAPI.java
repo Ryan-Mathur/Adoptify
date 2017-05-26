@@ -11,7 +11,6 @@ public class PetFinderAPI {
     public static final String API_KEY = "162b9e49bc224d56fd2fce3b079b49d5";
     public static final String JSON_FORMAT = "json";
     public static final String BASE_URL = "http://api.petfinder.com/";
-    public static final String LOCATION = "21157";
-    //public static final String COUNT = "100";
+    public static final String COUNT = "100";
 
 }
