@@ -1,5 +1,7 @@
 # ![](https://ga-dash.s3.amazonaws.com/production/assets/logo-9f88ae6c9c3871690e33280fcf557f33.png) Project #4: Adoptify
 
+# ![](https://git.generalassemb.ly/RAM/project_unit4_portfolio_app/blob/master/AdoptifyScreen1.jpg)
+
 ## Overview
 
 This application is designed to help you find pets near your location. 
